@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LexCognitio — Primary Sources. Intelligent Answers.</title>
+<meta name="description" content="LexCognitio is a legal research platform built on primary source documents. Currently in development by PrairieTech.">
+
+<!-- Google Analytics -->
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-GNGDWWD0XM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-GNGDWWD0XM');
+</script>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:        #0f0e0c;
+    --bg2:       #1a1814;
+    --bg3:       #232119;
+    --gold:      #c9a84c;
+    --gold-dim:  #8a6f2e;
+    --gold-glow: rgba(201,168,76,0.08);
+    --text:      #e8e2d4;
+    --text-dim:  #8a8070;
+    --text-mute: #4a4540;
+    --border:    rgba(201,168,76,0.15);
+    --border-dim:rgba(201,168,76,0.07);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', system-ui, sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* NOISE TEXTURE OVERLAY */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.4;
+  }
+
+  /* HEADER */
+  header {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 1.25rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--border-dim);
+    background: rgba(15,14,12,0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    text-decoration: none;
+  }
+
+  .logo-scales {
+    width: 28px;
+    height: 28px;
+    opacity: 0.9;
+  }
+
+  .logo-text {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--gold);
+    letter-spacing: 0.02em;
+  }
+
+  .logo-sub {
+    font-size: 0.6rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    display: block;
+    margin-top: -2px;
+  }
+
+  .status-pill {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    border: 1px solid var(--border);
+    padding: 0.35rem 0.85rem;
+    border-radius: 2rem;
+  }
+
+  .status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--gold);
+    animation: pulse 2.5s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.8); }
+  }
+
+  /* HERO */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 8rem 2rem 4rem;
+    z-index: 1;
+  }
+
+  /* Radial glow behind hero text */
+  .hero::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -60%);
+    width: min(600px, 90vw);
+    height: min(600px, 90vw);
+    background: radial-gradient(ellipse, rgba(201,168,76,0.06) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  .eyebrow {
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    margin-bottom: 1.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .eyebrow::before, .eyebrow::after {
+    content: '';
+    display: block;
+    width: 2rem;
+    height: 1px;
+    background: var(--gold-dim);
+    opacity: 0.5;
+  }
+
+  h1 {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: clamp(2.8rem, 7vw, 5.5rem);
+    font-weight: 600;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    color: var(--text);
+    margin-bottom: 0.25rem;
+  }
+
+  h1 em {
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  .tagline {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+    font-weight: 400;
+    font-style: italic;
+    color: var(--text-dim);
+    margin-bottom: 2.5rem;
+    letter-spacing: 0.02em;
+  }
+
+  .hero-description {
+    max-width: 560px;
+    font-size: clamp(0.9rem, 1.5vw, 1rem);
+    color: var(--text-dim);
+    line-height: 1.8;
+    margin-bottom: 3rem;
+  }
+
+  .hero-description strong {
+    color: var(--text);
+    font-weight: 400;
+  }
+
+  /* CTA BUTTONS */
+  .cta-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+    margin-bottom: 4rem;
+  }
+
+  .btn-primary {
+    display: inline-block;
+    padding: 0.85rem 2rem;
+    background: var(--gold);
+    color: #0f0e0c;
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 2px;
+    transition: background 0.2s, transform 0.15s;
+  }
+
+  .btn-primary:hover {
+    background: #d4b45e;
+    transform: translateY(-1px);
+  }
+
+  .btn-secondary {
+    display: inline-block;
+    padding: 0.85rem 2rem;
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    font-size: 0.8rem;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 2px;
+    transition: border-color 0.2s, color 0.2s, transform 0.15s;
+  }
+
+  .btn-secondary:hover {
+    border-color: var(--gold-dim);
+    color: var(--text);
+    transform: translateY(-1px);
+  }
+
+  /* SCROLL INDICATOR */
+  .scroll-hint {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-mute);
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  .scroll-line {
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, var(--gold-dim), transparent);
+    animation: scrollline 2s ease-in-out infinite;
+  }
+
+  @keyframes scrollline {
+    0%, 100% { opacity: 0.3; transform: scaleY(1); }
+    50% { opacity: 1; transform: scaleY(1.1); }
+  }
+
+  /* DIVIDER */
+  .divider {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--border), transparent);
+    margin: 0;
+  }
+
+  /* SECTIONS */
+  section {
+    position: relative;
+    z-index: 1;
+    padding: 5rem 2rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    margin-bottom: 1rem;
+  }
+
+  /* WHAT IS IT */
+  .what-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2.5rem;
+  }
+
+  .what-card {
+    background: var(--bg2);
+    border: 1px solid var(--border-dim);
+    border-radius: 4px;
+    padding: 2rem;
+    transition: border-color 0.2s, background 0.2s;
+  }
+
+  .what-card:hover {
+    border-color: var(--border);
+    background: var(--bg3);
+  }
+
+  .what-card-icon {
+    margin-bottom: 1rem;
+    opacity: 0.7;
+  }
+
+  .what-card h3 {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 0.5rem;
+  }
+
+  .what-card p {
+    font-size: 0.88rem;
+    color: var(--text-dim);
+    line-height: 1.7;
+  }
+
+  /* CORPUS LIST */
+  .corpus-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 2rem;
+  }
+
+  .corpus-tag {
+    font-size: 0.72rem;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    color: var(--gold-dim);
+    border: 1px solid var(--border);
+    padding: 0.4rem 0.9rem;
+    border-radius: 2rem;
+    text-transform: uppercase;
+  }
+
+  /* STATEMENT */
+  .statement {
+    text-align: center;
+    padding: 6rem 2rem;
+    background: var(--bg2);
+    border-top: 1px solid var(--border-dim);
+    border-bottom: 1px solid var(--border-dim);
+  }
+
+  .statement blockquote {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: clamp(1.4rem, 3.5vw, 2.4rem);
+    font-weight: 400;
+    font-style: italic;
+    color: var(--text);
+    max-width: 780px;
+    margin: 0 auto 1.5rem;
+    line-height: 1.4;
+  }
+
+  .statement blockquote em {
+    color: var(--gold);
+    font-style: normal;
+  }
+
+  .statement cite {
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-mute);
+    font-style: normal;
+  }
+
+  /* CONTACT */
+  .contact-wrap {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  @media (max-width: 700px) {
+    .contact-wrap { grid-template-columns: 1fr; gap: 2rem; }
+  }
+
+  .contact-left h2 {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 1rem;
+    line-height: 1.2;
+  }
+
+  .contact-left p {
+    font-size: 0.9rem;
+    color: var(--text-dim);
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+  }
+
+  .contact-email {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+    color: var(--gold-dim);
+    text-decoration: none;
+    letter-spacing: 0.05em;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 2px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+
+  .contact-email:hover {
+    color: var(--gold);
+    border-color: var(--gold-dim);
+  }
+
+  .form-frame {
+    border-radius: 4px;
+    overflow: hidden;
+    border: 1px solid var(--border-dim);
+    background: var(--bg2);
+  }
+
+  .form-frame iframe {
+    width: 100%;
+    min-height: 560px;
+    border: none;
+    display: block;
+    background: transparent;
+    filter: invert(0.92) hue-rotate(180deg) brightness(0.85);
+  }
+
+  /* FOOTER */
+  footer {
+    position: relative;
+    z-index: 1;
+    border-top: 1px solid var(--border-dim);
+    padding: 2.5rem 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    max-width: 100%;
+  }
+
+  .footer-brand {
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-mute);
+  }
+
+  .footer-brand span {
+    color: var(--gold-dim);
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 1.5rem;
+  }
+
+  .footer-links a {
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-mute);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .footer-links a:hover { color: var(--text-dim); }
+
+  /* RESPONSIVE */
+  @media (max-width: 600px) {
+    header { padding: 1rem 1.25rem; }
+    .hero { padding: 7rem 1.25rem 3rem; }
+    section { padding: 3.5rem 1.25rem; }
+    .statement { padding: 4rem 1.25rem; }
+    footer { padding: 2rem 1.25rem; flex-direction: column; align-items: flex-start; }
+    h1 { font-size: clamp(2.2rem, 11vw, 3rem); }
+  }
+
+  @media (min-width: 1400px) {
+    section { max-width: 1200px; }
+  }
+
+  /* REDUCED MOTION */
+  @media (prefers-reduced-motion: reduce) {
+    .status-dot, .scroll-line { animation: none; }
+    .btn-primary:hover, .btn-secondary:hover { transform: none; }
+  }
+
+  /* FADE IN ON LOAD */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <a href="https://lexcognitio.com/" class="logo" aria-label="LexCognitio home">
+    <svg class="logo-scales" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <circle cx="14" cy="4" r="1.5" fill="#c9a84c"></circle>
+      <line x1="14" y1="4" x2="14" y2="24" stroke="#c9a84c" stroke-width="1"></line>
+      <line x1="5" y1="8" x2="23" y2="8" stroke="#c9a84c" stroke-width="1" stroke-linecap="round"></line>
+      <line x1="5" y1="8" x2="5" y2="16" stroke="#c9a84c" stroke-width="1"></line>
+      <line x1="23" y1="8" x2="23" y2="16" stroke="#c9a84c" stroke-width="1"></line>
+      <path d="M2 16 Q5 20 8 16" stroke="#c9a84c" stroke-width="1" fill="none"></path>
+      <path d="M20 16 Q23 20 26 16" stroke="#c9a84c" stroke-width="1" fill="none"></path>
+      <line x1="10" y1="24" x2="18" y2="24" stroke="#c9a84c" stroke-width="1.5" stroke-linecap="round"></line>
+    </svg>
+    <div>
+      <span class="logo-text">LexCognitio</span>
+      <span class="logo-sub">Private Legal Research</span>
+    </div>
+  </a>
+  <div class="status-pill">
+    <span class="status-dot"></span>
+    In development
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="eyebrow">PrairieTech</div>
+  <h1>Primary sources.<br><em>Intelligent answers.</em></h1>
+  <p class="tagline">Legal research, rebuilt from the ground up.</p>
+  <p class="hero-description">
+    LexCognitio is a research platform built directly on <strong>primary legal documents</strong> — 
+    constitutions, federal code, statutes, uniform law. No paywalls. No summaries of summaries. 
+    <strong>The source, understood.</strong>
+  </p>
+  <div class="cta-group">
+    <a href="#contact" class="btn-primary">Express interest</a>
+    <a href="#about" class="btn-secondary">Learn more</a>
+  </div>
+  <div class="scroll-hint">
+    <div class="scroll-line"></div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- WHAT IS IT -->
+<section id="about">
+  <p class="section-label fade-in visible">What we're building</p>
+  <div class="what-grid">
+    <div class="what-card fade-in visible">
+      <div class="what-card-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#c9a84c" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 19.5A2.5 2.5 0 016.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"></path>
+        </svg>
+      </div>
+      <h3>Primary source corpus</h3>
+      <p>Built on the actual text of law — US Code, Uniform Commercial 
+Code, state constitutions and statutes. Not editorial summaries. Not 
+case digests. The law itself.</p>
+    </div>
+    <div class="what-card fade-in visible">
+      <div class="what-card-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#c9a84c" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+      </div>
+      <h3>Research that reasons</h3>
+      <p>Ask a question in plain language. Get an answer grounded in 
+statute, not speculation. Built for the practitioner who needs the 
+actual citation, not a confident guess.</p>
+    </div>
+    <div class="what-card fade-in visible">
+      <div class="what-card-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#c9a84c" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0110 0v4"></path>
+        </svg>
+      </div>
+      <h3>Private by design</h3>
+      <p>Your case files stay yours. Generated documents, client 
+research, private libraries — none of it touches shared infrastructure. 
+Confidentiality isn't a feature. It's the architecture.</p>
+    </div>
+  </div>
+
+  <div class="corpus-list fade-in visible">
+    <span class="corpus-tag">US Code</span>
+    <span class="corpus-tag">Uniform Commercial Code</span>
+    <span class="corpus-tag">Illinois Constitution</span>
+    <span class="corpus-tag">Illinois Statutes</span>
+    <span class="corpus-tag">Expanding</span>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- STATEMENT -->
+<div class="statement">
+  <blockquote class="fade-in visible">
+    "The law has always been public.<br>
+    <em>Understanding it</em> has never been."
+  </blockquote>
+  <cite>— LexCognitio, in development</cite>
+</div>
+
+<div class="divider"></div>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-wrap">
+    <div class="contact-left fade-in">
+      <p class="section-label">Get in touch</p>
+      <h2>Interested in what we're building?</h2>
+      <p>Whether you're a legal professional curious about early access,
+ a developer who wants to collaborate, or someone interested in this 
+domain — we want to hear from you.</p>
+      <p>For direct inquiries including domain, partnership, or press:</p>
+      <a href="mailto:prairietechinfo@gmail.com" class="contact-email">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline>
+        </svg>
+        prairietechinfo@gmail.com
+      </a>
+    </div>
+    <div class="form-frame fade-in">
+      <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScp2Qb_zF2B7sVJ0oCp7_aZk6kRFjq7NdaJ-k2bsp-MfDKbpA/viewform?embedded=true" title="LexCognitio contact form" loading="lazy">
+        Loading form…
+      </iframe>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">
+    <span>PrairieTech</span> &nbsp;·&nbsp; LexCognitio &nbsp;·&nbsp; © 2026
+  </div>
+  <nav class="footer-links" aria-label="Footer navigation">
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+    <a href="mailto:prairietechinfo@gmail.com">prairietechinfo@gmail.com</a>
+  </nav>
+</footer>
+
+<script>
+  // Fade in on scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(el => {
+      if (el.isIntersecting) {
+        el.target.classList.add('visible');
+        observer.unobserve(el.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+  // Smooth scroll for anchor links
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+</script>
+
+
+
+</body></html>
